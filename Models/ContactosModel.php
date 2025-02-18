@@ -34,7 +34,7 @@ class ContactosModel {
     }
 
     public function modifyContact() {
-
+        $consulta = "";
     }
 
     public function deleteContact() {
