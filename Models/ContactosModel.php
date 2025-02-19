@@ -14,27 +14,22 @@ class ContactosModel {
 
     // Metodos de base de datos
     public function getContactos() {
-        $consulta = 'SELECT * FROM contactoss';
+        $consulta = 'SELECT * FROM contactos';
 
         return mysqli_query($this->conexionBD, $consulta);
     }
 
-    public function comprobarAgenda() {
-        // $consulta = '';
-    }
-
     public function insertContact($nombre, $email, $tlf, $direccion) {
-        $consulta = 'INSERT INTO contactos (nombre, email, tlf, direccion) VALUE (?,?,?,?)';
-        $tlfNum = intval($tlf);
+        $consulta = 'INSERT INTO contactos (nombre, email, tlf, direccion) VALUES (?,?,?,?)';
 
         $stmt = $this->conexionBD->prepare($consulta);
-        $stmt->bind_param('ssis', $nombre, $email, $tlfNum, $direccion);
+        $stmt->bind_param('ssis', $nombre, $email, $tlf, $direccion);
 
         return $stmt->execute();
     }
 
-    public function modifyContact() {
-        $consulta = "";
+    public function modifyContact($id, $nombre, $email, $tlf, $direccion) {
+
     }
 
     public function deleteContact() {

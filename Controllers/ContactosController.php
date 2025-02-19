@@ -1,54 +1,54 @@
 <?php
 require_once __DIR__ . '/../Models/ContactosModel.php';
-class ContactosController {
+class ContactosController
+{
     private $contactosModel;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->contactosModel = new ContactosModel();
     }
 
-    public function getContactos() {
+    public function getContactos()
+    {
+        $resultado = $this->contactosModel->getContactos();
+        $contactos = [];
+
+        while ($fila = mysqli_fetch_assoc($resultado)) {
+            $contactos[$fila['id_contacto']] = $fila;
+        }
+        return $contactos;
+    }
+
+    public function insertContact($nombre, $email, $tlf, $direccion) {
         try {
             $this->contactosModel->getConection()->begin_transaction();
 
-            $resultado = $this->contactosModel->getContactos();
-            $contactos = [];
+            $this->contactosModel->insertContact($nombre, $email, $tlf, $direccion);
 
-            while ($fila = mysqli_fetch_assoc($resultado)) {
-                $contactos[$fila['id_contacto']] = $fila;
-            }
             $this->contactosModel->getConection()->commit();
-            // echo "Transaccion completada con exito. <br>";
-            return $contactos;
-        } catch(Exception $ex) {
+            echo "Transaccion completada con exito. <br>";
+        } catch (Exception $ex) {
             echo 'Error en la transaccion: ' . $ex->getMessage() . "<br> Iniciando rollback... <br>";
             $this->contactosModel->getConection()->rollBack();
             echo "Rollback completado con exito. <br>";
         }
     }
 
-    public function comprobarAgenda() {
-
-    }
-
-    public function insertContact($nombre, $email, $tlf, $direccion) {
+    public function modifyContact($id, $nombre, $email, $tlf, $direccion) {
         try {
             $this->contactosModel->getConection()->begin_transaction();
-            $resultado = $this->contactosModel->insertContact($nombre, $email, $tlf, $direccion);
-            
-            return null;
-        } catch(Exception $ex) {
-            echo "<b>ERROR: </b>" . $ex->getMessage() . "<br>";
+
+            $this->contactosModel->modifyContact($id, $nombre, $email, $tlf, $direccion);
+
+            $this->contactosModel->getConection()->commit();
+            echo "Transaccion completada con exito. <br>";
+        } catch (Exception $ex) {
+            echo 'Error en la transaccion: ' . $ex->getMessage() . "<br> Iniciando rollback... <br>";
+            $this->contactosModel->getConection()->rollBack();
+            echo "Rollback completado con exito. <br>";
         }
     }
 
-    public function modifyContact() {
-
-    }
-
-    public function deleteContact() {
-        
-    }
+    public function deleteContact() {}
 }
-
-?>

@@ -15,9 +15,10 @@ class ConexionModel {
             }
             return self::$conexion;
         }
+    }
 
-        self::$conexion->set_charset("utf8");
-        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    public static function conectarPDO() {
+        self::$conexion = new PDO("mysql:host=" . self::$dbHost . ";dbname=" . self::$dbName . ";charset=utf8", self::$dbUser, self::$dbPass);
     }
 }
 
