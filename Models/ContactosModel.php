@@ -29,11 +29,21 @@ class ContactosModel {
     }
 
     public function modifyContact($id, $nombre, $email, $tlf, $direccion) {
+        $consulta = 'UPDATE contactos SET nombre = ?, email = ?, tlf = ?, direccion = ? WHERE id_contacto = ?';
 
+        $stmt = $this->conexionBD->prepare($consulta);
+        $stmt->bind_param('ssisi', $nombre, $email, $tlf, $direccion, $id);
+    
+        return $stmt->execute();
     }
-
-    public function deleteContact() {
+    
+    public function deleteContact($id) {
+        $consulta = 'DELETE FROM contactos WHERE id_contacto = ?';
         
+        $stmt = $this->conexionBD->prepare($consulta);
+        $stmt->bind_param('i', $id);
+    
+        return $stmt->execute();
     }
 }
 

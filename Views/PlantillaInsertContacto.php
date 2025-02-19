@@ -1,22 +1,19 @@
 <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
-    <input type="submit" value="Listar contactos" name="listar">
-    <input type="submit" value="Insertar contacto" name="insertar">
-    <input type="submit" value="Modificar contacto" name="modificar">
-    <input type="submit" value="Borrar contacto" name="borrar">
-    <br><br>
-
     <label>
-        Nombre: <input type="text" name="nombre">
+        Nombre: <input type="text" name="nombre" required>
     </label>
     <label>
-        Email: <input type="email" name="email">
+        Email: <input type="email" name="email" required>
     </label>
     <label>
-        Telefono: <input type="text" name="tlf"  minlength="9" maxlength="9">
+        Telefono: <input type="text" name="tlf" required  minlength="9" maxlength="9">
     </label>
     <label>
-        Dirección: <input type="text" name="direccion">
+        Dirección: <input type="text" name="direccion" required>
     </label>
 
     <input type="submit" value="Insertar contacto" name="infoInsert">
+    <button>
+        <a href="./">Cancelar inserccion</a>
+    </button>
 </form>

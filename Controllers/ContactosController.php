@@ -24,18 +24,15 @@ class ContactosController
 
     public function mostrarContactos()
     {
-        $contactos = [];
-        for ($i = 1; $i < count($this->getContactos()) + 1; $i++) {
-            $contactos[$i] = $this->getContactos()[$i];
+        $contactos = $this->getContactos();
 
-            if ($contactos[$i] === $this->getContactos()[$i]) {
-                echo '<tr>';
-                echo '<td> <input type="checkbox" name="contactos[' . $contactos[$i]['id_contacto'] . ']" id="' . $contactos[$i]['id_contacto'] . '"> </td>';
-                foreach ($contactos[$i] as $key => $value) {
-                    echo '<td name"' . $key . '">' . $value . '</td>';
-                }
-                echo '</tr>';
+        foreach ($contactos as $contacto) {
+            echo '<tr>';
+            echo '<td> <input type="checkbox" name="contactos[' . $contacto['id_contacto'] . ']" id="' . $contacto['id_contacto'] . '"> </td>';
+            foreach ($contacto as $key => $value) {
+                echo '<td name"' . $key . '">' . $value . '</td>';
             }
+            echo '</tr>';
         }
     }
 
@@ -71,5 +68,9 @@ class ContactosController
         }
     }
 
-    public function deleteContact() {}
+    public function deleteContacts($ids) {
+        foreach ($ids as $id) {
+            $this->contactosModel->deleteContact($id);
+        }
+    }
 }
