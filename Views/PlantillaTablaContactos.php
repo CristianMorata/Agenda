@@ -28,19 +28,7 @@
             </thead>
             <tbody>
                 <?php
-                $contactos = [];
-                for ($i = 1; $i < count($contactosController->getContactos()) + 1; $i++) {
-                    $contactos[$i] = $contactosController->getContactos()[$i];
-
-                    if ($contactos[$i] === $contactosController->getContactos()[$i]) {
-                        echo '<tr>';
-                        echo '<td> <input type="checkbox" name="contactos[' . $contactos[$i]['id_contacto'] . ']" id="' . $contactos[$i]['id_contacto'] . '"> </td>';
-                        foreach ($contactos[$i] as $key => $value) {
-                            echo '<td>' . $value . '</td>';
-                        }
-                        echo '</tr>';
-                    }
-                }
+                $contactosController->mostrarContactos();
                 ?>
             </tbody>
         </table>

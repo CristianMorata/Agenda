@@ -13,14 +13,34 @@ class ContactosController
     {
         $resultado = $this->contactosModel->getContactos();
         $contactos = [];
+        $index = 1;
 
         while ($fila = mysqli_fetch_assoc($resultado)) {
-            $contactos[$fila['id_contacto']] = $fila;
+            $contactos[$index] = $fila;
+            $index++;
         }
         return $contactos;
     }
 
-    public function insertContact($nombre, $email, $tlf, $direccion) {
+    public function mostrarContactos()
+    {
+        $contactos = [];
+        for ($i = 1; $i < count($this->getContactos()) + 1; $i++) {
+            $contactos[$i] = $this->getContactos()[$i];
+
+            if ($contactos[$i] === $this->getContactos()[$i]) {
+                echo '<tr>';
+                echo '<td> <input type="checkbox" name="contactos[' . $contactos[$i]['id_contacto'] . ']" id="' . $contactos[$i]['id_contacto'] . '"> </td>';
+                foreach ($contactos[$i] as $key => $value) {
+                    echo '<td name"' . $key . '">' . $value . '</td>';
+                }
+                echo '</tr>';
+            }
+        }
+    }
+
+    public function insertContact($nombre, $email, $tlf, $direccion)
+    {
         try {
             $this->contactosModel->getConection()->begin_transaction();
 
@@ -35,7 +55,8 @@ class ContactosController
         }
     }
 
-    public function modifyContact($id, $nombre, $email, $tlf, $direccion) {
+    public function modifyContact($id, $nombre, $email, $tlf, $direccion)
+    {
         try {
             $this->contactosModel->getConection()->begin_transaction();
 
