@@ -22,13 +22,18 @@ class ContactosController
         return $contactos;
     }
 
+    public function getContactosById($id)
+    {
+        return $this->contactosModel->getContactosById($id);
+    }
+
     public function mostrarContactos()
     {
         $contactos = $this->getContactos();
 
         foreach ($contactos as $contacto) {
             echo '<tr>';
-            echo '<td> <input type="checkbox" name="contactos[' . $contacto['id_contacto'] . ']" id="' . $contacto['id_contacto'] . '"> </td>';
+            echo '<td> <input type="checkbox" name="contactos[' . $contacto['id_contacto'] . ']" value="' . $contacto['id_contacto'] . '"> </td>';
             foreach ($contacto as $key => $value) {
                 echo '<td name"' . $key . '">' . $value . '</td>';
             }

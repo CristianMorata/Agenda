@@ -19,6 +19,21 @@ class ContactosModel {
         return mysqli_query($this->conexionBD, $consulta);
     }
 
+    public function getContactosById($id) {
+        $consulta = 'SELECT * FROM contactos WHERE id_contacto = ?';
+        // $consulta = 'SELECT nombre, email, tlf, direccion FROM contactos WHERE id_contacto = ?';
+
+        $stmt = $this->conexionBD->prepare($consulta);
+        $stmt->bind_param('i', $id);
+
+        if ($stmt->execute()) {
+            $resultado = $stmt->get_result(); // Obtiene el resultado de la consulta
+            return $resultado->fetch_assoc(); // Devuelve un array asociativo con los datos
+        }
+
+        return null;
+    }
+
     public function insertContact($nombre, $email, $tlf, $direccion) {
         $consulta = 'INSERT INTO contactos (nombre, email, tlf, direccion) VALUES (?,?,?,?)';
 

@@ -4,13 +4,13 @@ require_once __DIR__ . '/../Controllers/ContactosController.php';
 $contactosController = new ContactosController();
 
 if (!$_POST) {
-    ?>
+?>
     <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
-    <?php include_once __DIR__ . '/PlantillaFormulario.php'; ?>
+        <?php include_once __DIR__ . '/PlantillaFormulario.php'; ?>
     </form>
-    <?php
+<?php
 } else {
-    ?>
+?>
     <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
     <?php
     include_once __DIR__ . '/PlantillaFormulario.php';
@@ -18,7 +18,7 @@ if (!$_POST) {
         include_once __DIR__ . '/PlantillaTablaContactos.php';
     } elseif (isset($_POST['insertar']) && !empty($_POST['insertar'])) {
         include_once __DIR__ . '/PlantillaInsertContacto.php';
-    // Hacer que al dar a modificar o borrar sin un usuario seleccionado muestre que no ha seleccionado ningún usuario
+        // Hacer que al dar a modificar o borrar sin un usuario seleccionado muestre que no ha seleccionado ningún usuario
     } elseif (isset($_POST['modificar']) && isset($_POST['contactos'])) {
         include_once __DIR__ . '/PlantillaModificarContacto.php';
     } elseif (isset($_POST['borrar']) && isset($_POST['contactos'])) {
@@ -29,12 +29,29 @@ if (!$_POST) {
     if (isset($_POST['infoInsert']) && !empty($_POST['infoInsert'])) {
         echo "Insertando... <br>";
         $contactosController->insertContact($_POST['nombre'], $_POST['email'], $_POST['tlf'], $_POST['direccion']);
-        $_POST = '';
+        $_POST = [];
+    } elseif (isset($_POST['infoModificar']) && !empty($_POST['infoModificar'])) {
+        echo "Modificando... <br>";
+        // echo "<pre>";
+        // print_r($_POST);
+        // echo "</pre>";
+        // $contactosController->modifyContact($_POST['id'], $_POST['nombre'], $_POST['email'], $_POST['tlf'], $_POST['direccion']);
+        foreach ($_POST['contactos'] as $id => $datos) {
+            $contactosController->modifyContact(
+                $id,
+                $datos['nombre'],
+                $datos['email'],
+                $datos['tlf'],
+                $datos['direccion']
+            );
+        }
+        $_POST = [];
     }
+
 
     echo "<pre>";
     print_r($_POST);
     echo "</pre>";
 }
-?>
-</form>
+    ?>
+    </form>
