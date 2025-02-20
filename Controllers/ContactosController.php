@@ -73,9 +73,9 @@ class ContactosController
         }
     }
 
-    public function deleteContacts($ids) {
-        foreach ($ids as $id) {
+    public function deleteContacts($id) {
+        // foreach ($ids as $id) {
             $this->contactosModel->deleteContact($id);
-        }
+        // }
     }
 }

@@ -6,14 +6,14 @@
         Email: <input type="email" name="email" required>
     </label>
     <label>
-        Telefono: <input type="text" name="tlf" required  minlength="9" maxlength="9">
+        Telefono: <input type="text" name="tlf" required minlength="9" maxlength="9">
     </label>
     <label>
         Dirección: <input type="text" name="direccion" required>
     </label>
 
     <input type="submit" value="Insertar contacto" name="infoInsert">
-    <button>
+    <button type="submit" value="listar">
         <a href="./">Cancelar inserccion</a>
     </button>
 </form>
