@@ -1,7 +1,7 @@
 <form action="<?php $_SERVER['PHP_SELF'] ?>" method="post">
     <input type="submit" value="Listar contactos" name="listar">
     <input type="submit" value="Insertar contacto" name="insertar">
-    <input type="submit" value="Borrar contacto" name="datosGurdadosModificar">
+    <input type="submit" value="Borrar contacto" name="datosGuardadosModificar">
     <br><br>
 
     <?php
@@ -25,11 +25,8 @@
             </label>
             <br>
     <?php
-        } else {
-            echo "No hacemos";
         }
-    }
-    ?>
+    } ?>
     <input type="submit" value="Modifcar contacto" name="infoModificar">
     <button>
         <a href="./">Cancelar modificacion</a>

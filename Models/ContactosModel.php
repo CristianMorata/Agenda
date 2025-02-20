@@ -21,7 +21,6 @@ class ContactosModel {
 
     public function getContactosById($id) {
         $consulta = 'SELECT * FROM contactos WHERE id_contacto = ?';
-        // $consulta = 'SELECT nombre, email, tlf, direccion FROM contactos WHERE id_contacto = ?';
 
         $stmt = $this->conexionBD->prepare($consulta);
         $stmt->bind_param('i', $id);

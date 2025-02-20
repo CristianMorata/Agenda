@@ -13,7 +13,7 @@
     </label>
 
     <input type="submit" value="Insertar contacto" name="infoInsert">
-    <button type="submit" value="listar">
+    <button type="submit">
         <a href="./">Cancelar inserccion</a>
     </button>
 </form>

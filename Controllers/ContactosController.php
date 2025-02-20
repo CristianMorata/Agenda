@@ -13,11 +13,9 @@ class ContactosController
     {
         $resultado = $this->contactosModel->getContactos();
         $contactos = [];
-        $index = 1;
 
         while ($fila = mysqli_fetch_assoc($resultado)) {
-            $contactos[$index] = $fila;
-            $index++;
+            $contactos[$fila['id_contacto']] = $fila;
         }
         return $contactos;
     }
@@ -41,12 +39,41 @@ class ContactosController
         }
     }
 
-    public function insertContact($nombre, $email, $tlf, $direccion)
+    public function insertarContacto($nombre, $email, $tlf, $direccion)
+    {
+        // Comprobar que ningun campo sea nulo
+        if (!empty($nombre) && !empty($email) && !empty($tlf) && !empty($direccion)) {
+
+            // Comprobar que el campo telefono sea un numero.
+            if (ctype_digit($tlf)) {
+                try {
+                    $this->contactosModel->getConection()->begin_transaction();
+    
+                    $this->contactosModel->insertContact($nombre, $email, $tlf, $direccion);
+    
+                    $this->contactosModel->getConection()->commit();
+                    echo "Transaccion completada con exito. <br>";
+                } catch (Exception $ex) {
+                    echo 'Error en la transaccion: ' . $ex->getMessage() . "<br> Iniciando rollback... <br>";
+                    $this->contactosModel->getConection()->rollBack();
+                    echo "Rollback completado con exito. <br>";
+                }
+            } else {
+                echo "<p>El numero de telefono no es un numero valido. Por favor, inserte un valor valido.</p>";
+            }
+        } else {
+            echo "<p>Uno de los campos está vacío, por favor relleno todos los datos.</p>";
+        }
+    }
+
+    public function modificarContactos($contactos)
     {
         try {
             $this->contactosModel->getConection()->begin_transaction();
 
-            $this->contactosModel->insertContact($nombre, $email, $tlf, $direccion);
+            foreach ($contactos as $datos) {
+                $this->contactosModel->modifyContact($datos['id'], $datos['nombre'], $datos['email'], $datos['tlf'], $datos['direccion']);
+            }
 
             $this->contactosModel->getConection()->commit();
             echo "Transaccion completada con exito. <br>";
@@ -57,25 +84,10 @@ class ContactosController
         }
     }
 
-    public function modifyContact($id, $nombre, $email, $tlf, $direccion)
+    public function borrarContactos($ids)
     {
-        try {
-            $this->contactosModel->getConection()->begin_transaction();
-
-            $this->contactosModel->modifyContact($id, $nombre, $email, $tlf, $direccion);
-
-            $this->contactosModel->getConection()->commit();
-            echo "Transaccion completada con exito. <br>";
-        } catch (Exception $ex) {
-            echo 'Error en la transaccion: ' . $ex->getMessage() . "<br> Iniciando rollback... <br>";
-            $this->contactosModel->getConection()->rollBack();
-            echo "Rollback completado con exito. <br>";
-        }
-    }
-
-    public function deleteContacts($id) {
-        // foreach ($ids as $id) {
+        foreach ($ids as $id) {
             $this->contactosModel->deleteContact($id);
-        // }
+        }
     }
 }
