@@ -16,17 +16,17 @@
 
             // Comprobante de si se solicita modificar uno o varios usuarios, que sean modificados
         } elseif (isset($_POST['infoModificar']) && !empty($_POST['infoModificar'])) {
-            $contactosController->modificarContactos($_POST['contactos']);
+            $contactosController->modificarContactos($_POST['contactos'], 8);
 
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
+            $_POST = [];
+            $_POST['listar'] = 'Listar contactos';
             // Comprobante de si se solicita elminar uno o varios usuarios, que sean eliminados
         } elseif (isset($_POST['confirmarBorrar']) && !empty($_POST['confirmarBorrar'])) {
             echo "Borrando... <br>";
             $contactosController->borrarContactos($_POST['contactos']);
 
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
+            $_POST = [];
+            $_POST['listar'] = 'Listar contactos';
         }
 
         if (isset($_POST['listar']) && !empty($_POST['listar'])) {

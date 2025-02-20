@@ -48,39 +48,56 @@ class ContactosController
             if (ctype_digit($tlf)) {
                 try {
                     $this->contactosModel->getConection()->begin_transaction();
-    
+
                     $this->contactosModel->insertContact($nombre, $email, $tlf, $direccion);
-    
+
                     $this->contactosModel->getConection()->commit();
-                    echo "Transaccion completada con exito. <br>";
+
+                    $this->mostrarMensajeExito("Insercción de contactos completada con exito.");
                 } catch (Exception $ex) {
-                    echo 'Error en la transaccion: ' . $ex->getMessage() . "<br> Iniciando rollback... <br>";
+                    $this->mostrarMensajeError('Error en la transaccion de inserccion: Iniciando rollback...');
                     $this->contactosModel->getConection()->rollBack();
-                    echo "Rollback completado con exito. <br>";
+                    $this->mostrarMensajeError('Rollback completado con exito.');
                 }
             } else {
-                echo "<p>El numero de telefono no es un numero valido. Por favor, inserte un valor valido.</p>";
+                $this->mostrarMensajeError("El numero de telefono no es un numero valido. Por favor, inserte un valor valido.");
             }
         } else {
-            echo "<p>Uno de los campos está vacío, por favor relleno todos los datos.</p>";
+            $this->mostrarMensajeError("Uno de los campos está vacío, por favor relleno todos los datos.");
         }
     }
 
-    public function modificarContactos($contactos)
+    public function modificarContactos($contactos, $id)
     {
-        try {
-            $this->contactosModel->getConection()->begin_transaction();
-
+        // Comprobar que el array recibido no sea nulo
+        if (!empty($contactos)) {
             foreach ($contactos as $datos) {
-                $this->contactosModel->modifyContact($datos['id'], $datos['nombre'], $datos['email'], $datos['tlf'], $datos['direccion']);
-            }
+                // Comprobar que ningun campo sea nulo
 
-            $this->contactosModel->getConection()->commit();
-            echo "Transaccion completada con exito. <br>";
-        } catch (Exception $ex) {
-            echo 'Error en la transaccion: ' . $ex->getMessage() . "<br> Iniciando rollback... <br>";
-            $this->contactosModel->getConection()->rollBack();
-            echo "Rollback completado con exito. <br>";
+                if (!empty($datos['nombre']) && !empty($datos['email']) && !empty($datos['tlf']) && !empty($datos['direccion'])) {
+
+                    // Comprobar que el campo telefono sea un numero.
+                    if (ctype_digit($datos['tlf'])) {
+                        try {
+                            $this->contactosModel->getConection()->begin_transaction();
+
+                            $this->contactosModel->modifyContact($datos['id'], $datos['nombre'], $datos['email'], $datos['tlf'], $datos['direccion']);
+
+                            $this->contactosModel->getConection()->commit();
+
+                            $this->mostrarMensajeExito("Modificación de contactos completada con exito.");
+                        } catch (Exception $ex) {
+                            $this->mostrarMensajeError('Error en la transaccion de modificación: Iniciando rollback...');
+                            $this->contactosModel->getConection()->rollBack();
+                            $this->mostrarMensajeError('Rollback completado con exito.');
+                        }
+                    } else {
+                        $this->mostrarMensajeError("El numero de telefono no es un numero valido. Por favor, inserte un valor valido.");
+                    }
+                } else {
+                    $this->mostrarMensajeError("Uno de los campos está vacío, por favor relleno todos los datos.");
+                }
+            }
         }
     }
 
@@ -89,5 +106,40 @@ class ContactosController
         foreach ($ids as $id) {
             $this->contactosModel->deleteContact($id);
         }
+
+        $this->mostrarMensajeExito("Contactos eliminados con exito.");
+    }
+
+    // Funciones de funcionalidad extras
+
+    public function mostrarMensajeError($mensaje)
+    {
+        echo '<p id="mensaje" class="error" style="color: red; transition: opacity 1s;">' . $mensaje . '</p>
+                    <script>
+                        setTimeout(function() {
+                            document.getElementById("mensaje").style.opacity = "0";
+                            setTimeout(function() {
+                                document.getElementById("mensaje").style.display = "none";
+                            }, 1000);
+                        }, 3000);
+                    </script>';
+    }
+
+    public function mostrarMensajeAviso($mensaje)
+    {
+        echo '<p id="mensaje" class="aviso" style="color: yellow">' . $mensaje . '</p>';
+    }
+
+    public function mostrarMensajeExito($mensaje)
+    {
+        echo '<p id="mensaje" class="exito" style="color: green; transition: opacity 1s;">' . $mensaje . '</p>
+                    <script>
+                        setTimeout(function() {
+                            document.getElementById("mensaje").style.opacity = "0";
+                            setTimeout(function() {
+                                document.getElementById("mensaje").style.display = "none";
+                            }, 1000);
+                        }, 3000);
+                    </script>';
     }
 }
