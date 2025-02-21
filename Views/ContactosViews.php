@@ -42,7 +42,7 @@
         } elseif (isset($_POST['datosGuardadosBorrar']) && !empty($_POST['datosGuardadosBorrar'])) {
             include_once __DIR__ . '/PlantillaModificarContacto.php';
         } else {
-            echo "<p>No se han seleccionado ningun contacto para la accion.</p>";
+            $contactosController->mostrarMensajeAvisoTemporal("No se han seleccionado ningun contacto para la accion.");
             include_once __DIR__ . '/PlantillaTablaContactos.php';
         }
     }

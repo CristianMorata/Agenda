@@ -114,7 +114,7 @@ class ContactosController
 
     public function mostrarMensajeError($mensaje)
     {
-        echo '<p id="mensaje" class="error" style="color: red; transition: opacity 1s;">' . $mensaje . '</p>
+        echo '<p id="mensaje" class="mensajeError" style="transition: opacity 1s;">' . $mensaje . '</p>
                     <script>
                         setTimeout(function() {
                             document.getElementById("mensaje").style.opacity = "0";
@@ -127,12 +127,25 @@ class ContactosController
 
     public function mostrarMensajeAviso($mensaje)
     {
-        echo '<p id="mensaje" class="aviso" style="color: yellow">' . $mensaje . '</p>';
+        echo '<p id="mensaje" class="mensajeAviso">' . $mensaje . '</p>';
+    }
+
+    public function mostrarMensajeAvisoTemporal($mensaje)
+    {
+        echo '<p id="mensaje" class="mensajeAviso" style="transition: opacity 1s;">' . $mensaje . '</p>
+                    <script>
+                        setTimeout(function() {
+                            document.getElementById("mensaje").style.opacity = "0";
+                            setTimeout(function() {
+                                document.getElementById("mensaje").style.display = "none";
+                            }, 1000);
+                        }, 3000);
+                    </script>';
     }
 
     public function mostrarMensajeExito($mensaje)
     {
-        echo '<p id="mensaje" class="exito" style="color: green; transition: opacity 1s;">' . $mensaje . '</p>
+        echo '<p id="mensaje" class="mensajeExito" style="transition: opacity 1s;">' . $mensaje . '</p>
                     <script>
                         setTimeout(function() {
                             document.getElementById("mensaje").style.opacity = "0";

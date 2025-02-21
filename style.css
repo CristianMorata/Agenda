@@ -1,3 +1,263 @@
+/* Visualizacion de la pagina */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    
+    min-height: 100dvh;
+
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+header {
+    background: linear-gradient(135deg, #0056b3, #003f7f);;
+    color: white;
+    padding: 1rem;
+
+    text-align: center;
+}
+
+main {
+    background-color: lightblue;
+
+    display: flex;
+    justify-content: center;
+    align-items: top;
+    text-align: center;
+    padding: 20px;
+}
+
+footer {
+    background: linear-gradient(135deg, #0056b3, #003f7f);
+    color: white;
+    padding: 0.5rem;
+}
+
+/* Formularios */
+/* Fomrmulario de insertar */
+.formulario-insertar {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    label {
+        font-weight: 600;
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+        color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+        padding: 10px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        outline: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+}
+
+/* Formulario de modificar */
+.formulario-modificar {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /* Botones superiores */
+    .botones-superiores {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    /* Grid para organizar contactos */
+    .grid-contactos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        width: 100%;
+    }
+
+    /* Tarjeta de contacto */
+    .tarjeta-contacto {
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        font-weight: 600;
+        font-size: 14px;
+        display: block;
+        margin-top: 8px;
+        color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+        width: 100%;
+        padding: 8px;
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        outline: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Botones inferiores */
+    .botones-inferiores {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .grid-contactos {
+            grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+        }
+    }
+}
+
+/* Tabla */
+.tabla-contenedor {
+    width: 90%;
+    max-width: 800px;
+    overflow-x: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+thead {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+}
+
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #e6f2ff;
+}
+
+tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+@media (max-width: 600px) {
+
+    th,
+    td {
+        padding: 8px;
+        font-size: 14px;
+    }
+}
+
+/* Botones */
+.boton {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 6px 12px;
+    margin: 1rem;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    border: none;
+    border-radius: 50px;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.boton:hover {
+    background: linear-gradient(135deg, #0056b3, #003f7f);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
+.boton-cancelar {
+    background: linear-gradient(135deg, #fc2626, #fa0505);
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+}
+
+/* Mensajes */
+#mensaje {
+    padding: 2rem;
+    margin: 1rem;
+    border-radius: 10px;
+    font: bolder;
+    width: 96%;
+
+    text-align: start;
+}
+
+.mensajeError {
+    background-color: lightcoral;
+    color: red;
+    border: 1px solid red;
+}
+
+.mensajeAviso {
+    background-color: lightyellow;
+    color: #d0d015;
+    border: 1px solid #d0d015;
+}
+
+.mensajeExito {
+    background-color: lightgreen;
+    color: darkgreen;
+    border: 1px solid darkgreen;
 }
