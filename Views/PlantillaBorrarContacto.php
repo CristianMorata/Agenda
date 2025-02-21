@@ -10,6 +10,7 @@
             if ($contacto) {
 
                 $resultado = $contactosController->getContactosById($contacto);
+                echo '<input type="hidden" name="contactos[' . $contacto . ']" value="' . $contacto . '">';
 
                 $contactosController->mostrarMensajeAviso("Estas seguro de que desea eliminar al contacto <b>" . $resultado['nombre'] . "?</b>");
             }

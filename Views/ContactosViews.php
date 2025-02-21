@@ -22,7 +22,6 @@
             $_POST['listar'] = 'Listar contactos';
             // Comprobante de si se solicita elminar uno o varios usuarios, que sean eliminados
         } elseif (isset($_POST['confirmarBorrar']) && !empty($_POST['confirmarBorrar'])) {
-            echo "Borrando... <br>";
             $contactosController->borrarContactos($_POST['contactos']);
 
             $_POST = [];
